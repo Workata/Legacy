@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+
+<link rel="stylesheet" href="{% static 'css/animeInfo.css' %}" type="text/css" />
+
+{% endblock %}
+{% block content %}
+
+<span id="backButton">
+    <a href="/animeList"> 
+        B<!--<i class="icon-left">B</i>-->
+    </a>
+</span>
+
+<div id="informationsContainer">
+    <div id="header">Informations</div>
+    
+    <div id="informations">
+        <div class="rowData"><span class="infoName">Title:</span> {{anime.title}} </div>
+        <div class="rowData"><span class="infoName">Directed by:</span> {{anime.directedBy}}</div>
+        <div class="rowData"><span class="infoName">Produced by:</span> {{anime.producedBy}}</div> 
+        <div class="rowData"><span class="infoName">Written by:</span> {{anime.writtenBy}}</div>
+        <div class="rowData"><span class="infoName">Music by:</span> {{anime.musicBy}}</div> 
+        <div class="rowData"><span class="infoName">Studio:</span> {{anime.studio}} 
+        <div class="rowData"><span class="infoName">Licensed by:</span> {{anime.licensedBy}}</div> 
+        <div class="rowData"><span class="infoName">Original network:</span> {{anime.originalNetwork}}</div>
+        <div class="rowData"><span class="infoName">Number of episodes:</span> {{anime.episodes}}</div>
+        <a href="/animeAdd?animeId={{animeId}}&animeInfoId={{animeInfoId}}&animeGlobalId={{animeGlobalId}}">Modify</a>
+    </div>
+    
+</div>
+
+
+{% endblock %}

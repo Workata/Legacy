@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+
+
+{% endblock %}
+
+{% block content %}
+
+<form action="animeScraper" method="post">
+    {% csrf_token %}
+
+    <input type="text" name="personalTitle" placeholder="Title"><br>
+
+    <input type="submit">
+
+
+
+</form>
+
+<div style="color: white;">
+    Title: {{anime.title}} <br>
+    Directed by: {{anime.directedBy}} <br>
+    Produced by: {{anime.producedBy}} <br> 
+    Written by: {{anime.writtenBy}} <br>
+    Music by: {{anime.musicBy}} <br>
+    Studio: {{anime.studio}} <br>
+    Licensed by: {{anime.licensedBy}} <br>
+    Original network: {{anime.originalNetwork}} <br>
+    Number of episodes: {{anime.episodes}} <br>
+</div>
+
+{% endblock %}

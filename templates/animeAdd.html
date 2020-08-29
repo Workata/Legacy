@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+
+<link rel="stylesheet" href="{% static 'css/animeAdd.css' %}" type="text/css" />
+<script type="text/javascript" src="{% static 'js/animeAddFun.js' %}"></script>
+
+{% endblock %}
+
+{% block content %}
+
+<!-- content here-->
+<div id="container">
+    <div id="leftForm" class="form">
+
+        <div id="leftBoxTitle">Data</div>
+
+        <form action="animeAdd" method="post">
+            {% csrf_token %}
+
+            <label for="personalTitle">Title: </label>
+            <input type="text" value="{{personalTitle}}{{anime.title}}" class="input" name="personalTitle" id="personalTitle" placeholder="Title"><br>
+            <label for="personalStatus">Status: </label>
+            <input type="text" class="input" value="{{anime.status}}" list="statusEnum" name="status" id="personalStatus" placeholder="Status"><br>
+            <label for="personalEpisodes">Finished episodes: </label>
+            <input type="number" class="input" value="{{anime.finishedEpisodes}}" name="finishedEpisodes" id="personalEpisodes"><br>
+            <label for="personalEndDate">End date: </label>
+            <input type="date" class="input" value="{{anime.endDate}}" name="endDate" placeholder="Date of finish" id="personalEndDate"><br>
+            <label for="personalRating">Rating: </label>
+            <input type="number" list="ratingEnum" value="{{anime.rating}}" class="input" name="rating" id="personalRating"><br>
+            <label for="personalComment">Comment: </label>
+            <input type="text" class="input" value="{{anime.comment}}" name="comment" placeholder="Comment" id="personalComment"><br>
+            
+            <input type = "number" name = "animeId"  value = "{{anime.id}}" /> 
+            <input type = "number" name = "animeInfoPersonalId" id="animeInfoPersonal" value = "{{animeInfo.id}}" /> <!--hidden-->
+            <input type = "number" name = "animeInfoGlobalId" id="animeInfoGlobal" value = "{{animeGlobal.id}}" /> 
+
+            <input type="submit" class="submitButton" value="Submit">
+            <input type="submit" formaction="/animeScraper?animeId={{anime.id}}&animeInfoId={{animeInfo.id}}&animeGlobalId={{animeGlobal.id}}" class="submitButton" value="Find">
+
+    </div>
+
+    <div id="rigthForm" class="form">
+
+        <div id="rigthBoxTitle">Informations</div>
+
+            <label for="globalTitle">Title: </label>
+            <input type="text" value="{{animeGlobal.title}}" class="input" name="globalTitle" id="globalTitle" placeholder="Title"><br>
+            <label for="directedBy">Directed by: </label>
+            <input type="text" value="{{animeGlobal.directedBy}}" class="input" name="directedBy" id="directedBy" placeholder=""><br>
+            <label for="producedBy">Produced by: </label>
+            <input type="text" value="{{animeGlobal.producedBy}}" class="input" name="producedBy" id="producedBy" placeholder=""><br>
+            <label for="writtenBy">Written by: </label>
+            <input type="text" onchange="checkChanges()" value="{{animeGlobal.writtenBy}}" class="input" name="writtenBy" id="writtenBy" placeholder="" ><br>
+            <label for="musicBy">Music by: </label>
+            <input type="text" value="{{animeGlobal.musicBy}}" class="input" name="musicBy" id="musicBy" placeholder="" ><br>
+            <label for="studio">Studio: </label>
+            <input type="text" value="{{animeGlobal.studio}}" class="input" name="studio" id="studio" placeholder="" ><br>
+            <label for="licensedBy">Licensed by: </label>
+            <input type="text"  value="{{animeGlobal.licensedBy}}" class="input" name="licensedBy" id="licensedBy" placeholder="" ><br>
+            <label for="orginalNetwork">Original network: </label>
+            <input type="text" value="{{animeGlobal.originalNetwork}}"  class="input" name="orginalNetwork" id="orginalNetwork" placeholder="" ><br>
+            <label for="orginalRun">Original run: </label>
+            <input type="text" value="{{animeGlobal.originalRun}}" class="input" name="orginalRun" id="orginalRun" placeholder="" ><br>
+            <label for="globalEpisodes">Episodes: </label>
+            <input type="number" value="{{animeGlobal.episodes}}" class="input" name="globalEpisodes" id="globalEpisodes" placeholder="" ><br>
+
+        </form>
+
+    </div>
+    <div style="clear: both;" > </div>
+</div>
+
+<datalist id="statusEnum">
+    <option value="Watching">
+    <option value="Want to watch">
+    <option value="Finished">
+    <option value="Abandoned">  
+</datalist>
+
+<datalist id="ratingEnum">
+    <option value="1">
+    <option value="2">
+    <option value="3">
+    <option value="4">  
+    <option value="5">
+    <option value="6">
+    <option value="7">
+    <option value="8">
+    <option value="9">
+    <option value="10">                
+</datalist>
+
+{% endblock %}

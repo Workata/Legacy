@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+
+<link rel="stylesheet" href="{% static 'css/index.css' %}" type="text/css" />
+
+{% endblock %}
+
+
+{% block content %}
+
+<!-- content here-->
+
+<div id="menu">
+    <div class="menuButton"><a href="/animeList" class="aTagButton">Anime</a></div><br>
+    <div class="menuButton"> <a href="/animeList" class="aTagButton">Manga</a> </div><br>
+    <div class="menuButton"> <a href="/animeList" class="aTagButton">Films</a> </div><br>
+    <div class="menuButton"> <a href="/animeList" class="aTagButton">TV Series</a> </div><br>
+    <div class="menuButton"> <a href="/animeList" class="aTagButton">Books</a> </div><br>
+</div>
+
+
+
+
+{% endblock %}
