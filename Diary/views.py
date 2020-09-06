@@ -6,12 +6,15 @@ from WikiScraper.models import AnimeGlobal
 
 # Create your views here.
 
+# zip animes personal data with number of episodes in each (global data or anime info personal)
 def viewAnimeList(animes):
     episodes = []
-    for anime in animes: # get number of episodes in each anime
-        if anime.animeGlobalId != None:
+    for anime in animes:                        # get number of episodes in each anime
+        if anime.animeGlobalId != None:         # firstly check in global data
             episodes.append(AnimeGlobal.objects.filter(id=anime.animeGlobalId).first().episodes)
-        else:
+        elif anime.animeInfoPersonalId != None: # then check in personal information about this anime
+            episodes.append(AnimeInfoPersonal.objects.filter(id=anime.animeInfoPersonalId).first().episodes)
+        else:                                   # if there is no information about number of episodes just push 0
             episodes.append(0)
     aniEpiList = zip(animes,episodes)
     return aniEpiList
@@ -22,8 +25,14 @@ def home(request):
 def anime(request):
     return render(request, 'anime.html')
 
-def animeList(request):
-    animes = AnimePersonal.objects.all().order_by('title')
+def animeList(request):         # TODO make default sort/order
+    sortBy = request.GET['by']
+    order = request.GET['order']
+    if order == "desc": 
+        order = "-"
+    else:   # asc
+        order = ""
+    animes = AnimePersonal.objects.all().order_by(order+sortBy) # https://stackoverflow.com/questions/9834038/django-order-by-query-set-ascending-and-descending tldr: "-title" -> desc, "title" -> asc 
     aniEpiList = viewAnimeList(animes)
     return render(request, 'animeList.html',{'aniEpiList': aniEpiList})
 
@@ -139,11 +148,13 @@ def listModify(request):
 
 def sortStatus(request):    # make new query and order by sth TODO performence upgrade -> sort already downloaded data
     animes = AnimePersonal.objects.all().order_by('status')
-    return render(request, 'animeList.html',{'animes': animes})
+    aniEpiList = viewAnimeList(animes)
+    return render(request, 'animeList.html',{'aniEpiList': aniEpiList})
 
 def sortTitle(request):    # make new query and order by sth TODO performence upgrade -> sort already downloaded data
     animes = AnimePersonal.objects.all().order_by('title')
-    return render(request, 'animeList.html',{'animes': animes})
+    aniEpiList = viewAnimeList(animes)
+    return render(request, 'animeList.html',{'aniEpiList': aniEpiList})
 
 def sortEndDate(request):    # make new query and order by sth TODO performence upgrade -> sort already downloaded data
     animes = AnimePersonal.objects.all().order_by('finishedDate')

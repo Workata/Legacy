@@ -121,3 +121,8 @@ table, th, td
   right: 70px;
   text-align: center;
 }
+
+#ratingCell
+{
+  width: 35px;
+}

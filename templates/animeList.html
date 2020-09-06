@@ -4,9 +4,7 @@
 {% block head %}
 
 <link rel="stylesheet" href="{% static 'css/animeList.css' %}" type="text/css" />
-<link rel="stylesheet" href="{% static 'icons/icon-set-1/css/fontello.css' %}" type="text/css" />
-<link rel="stylesheet" href="{% static 'icons/icon-set-2/css/fontello.css' %}" type="text/css" />
-<link rel="stylesheet" href="{% static 'icons/icon-set-3/css/fontello.css' %}" type="text/css" />
+<link rel="stylesheet" href="{% static 'icons/icon-set-4-all/css/fontello.css' %}" type="text/css" />
 <script type="text/javascript" src="{% static 'js/listFun.js' %}"></script>
 
 
@@ -33,12 +31,32 @@
 
     <table style="width:100%">
 
-        <tr>
-            <th class="columnName"><a href="/sortTitle">Title</a></th>
+        <tr>    <!-- DESC = reversed alphabetical order-->
+            <th class="columnName">Title
+                <a href="/animeList?by=title&order=asc"><i class="icon-up-open"></i>
+                </a>
+                <a href="/animeList?by=title&order=desc"><i class="icon-down-open"></i>
+                </a>
+            </th>
             <th class="columnName">Episodes</th> 
-            <th class="columnName"><a href="/sortStatus">Status</a></th>
-            <th class="columnName"><a href="/sortEndDate">End date</a></th>   <!-- Correct phrase?-->
-            <th class="columnName"><a href="/sortPremiered">Rating</a></th>  <!-- Correct word-->
+            <th class="columnName">Status
+                <a href="/animeList?by=status&order=asc"><i class="icon-up-open"></i>
+                </a>
+                <a href="/animeList?by=status&order=desc"><i class="icon-down-open"></i>
+                </a>
+            </th>
+            <th class="columnName">End date <!-- Correct phrase?-->
+                <a href="/animeList?by=endDate&order=asc"><i class="icon-up-open"></i>
+                </a>
+                <a href="/animeList?by=endDate&order=desc"><i class="icon-down-open"></i>
+                </a>
+            </th>   
+            <th class="columnName">Rating <!-- Correct word-->
+                <a href="/animeList?by=rating&order=asc"><i class="icon-up-open"></i>
+                </a>
+                <a href="/animeList?by=rating&order=desc"><i class="icon-down-open"></i>
+                </a>
+            </th>  
             <th class="columnName">Comment</th>
             <th class="columnName">Info</th>
             <th class="columnName">Delete</th>

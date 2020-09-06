@@ -4,13 +4,14 @@
 {% block head %}
 
 <link rel="stylesheet" href="{% static 'css/animeInfo.css' %}" type="text/css" />
+<link rel="stylesheet" href="{% static 'icons/icon-set-4-all/css/fontello.css' %}" type="text/css" />
 
 {% endblock %}
 {% block content %}
 
 <span id="backButton">
-    <a href="/animeList"> 
-        B<!--<i class="icon-left">B</i>-->
+    <a href="/animeList?by=title&order=asc"> 
+        <i class="icon-left"></i>
     </a>
 </span>
 
