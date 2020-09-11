@@ -39,68 +39,107 @@ def animeList(request):         # TODO make default sort/order
 def animeAdd(request):   
             
     if request.method == 'POST':
-        title = request.POST['personalTitle']
-        status = request.POST['status']
-        finishedEpisodes = request.POST['finishedEpisodes']
-        endDate = request.POST['endDate']
-        rating = request.POST['rating']
-        comment = request.POST['comment']
+        anime = AnimePersonal()
+        anime.title = request.POST['personalTitle']
+        anime.status = request.POST['status']         
+        anime.finishedEpisodes = request.POST['finishedEpisodes']
+        anime.endDate = request.POST['endDate']
+        anime.rating = request.POST['rating']
+        anime.comment = request.POST['comment']
         animeId = request.POST['animeId']
         animeInfoGlobalId = request.POST['animeInfoGlobalId']
         animeInfoPersonalId = request.POST['animeInfoPersonalId']
 
+        animeInfoPersonal = AnimeInfoPersonal()
+        animeInfoPersonal.title            = request.POST['globalTitle']
+        animeInfoPersonal.directedBy       = request.POST['directedBy']
+        animeInfoPersonal.producedBy       = request.POST['producedBy']
+        animeInfoPersonal.writtenBy        = request.POST['writtenBy']
+        animeInfoPersonal.musicBy          = request.POST['musicBy']
+        animeInfoPersonal.studio           = request.POST['studio']
+        animeInfoPersonal.licensedBy       = request.POST['licensedBy']
+        animeInfoPersonal.originalNetwork  = request.POST['originalNetwork']
+        animeInfoPersonal.originalRun      = request.POST['originalRun']
+        animeInfoPersonal.episodes         = request.POST['globalEpisodes']
+
+        # data validation - start
+        if anime.title == "": 
+            return render(request, 'animeAdd.html',{'anime': anime, 'animeInfo':  animeInfoPersonal, 'animeGlobal': None, 'wrongTitle': True})
+
+        if anime.status != "Watching" and anime.status != "Want to watch" and anime.status != "Finished" and anime.status != "Abandoned":
+            return render(request, 'animeAdd.html',{'anime': anime, 'animeInfo':  animeInfoPersonal, 'animeGlobal': None, 'wrongStatus': True})
+
+        if anime.finishedEpisodes == "":
+            return render(request, 'animeAdd.html',{'anime': anime, 'animeInfo':  animeInfoPersonal, 'animeGlobal': None, 'wrongEpisodes': True})
+
+        if anime.endDate == "":
+            return render(request, 'animeAdd.html',{'anime': anime, 'animeInfo': animeInfoPersonal, 'animeGlobal': None, 'wrongDate': True})
+
+        if anime.rating == "": 
+            rating = 0  # 0 -> rating not defined
+
+        if int(anime.rating) < 0 or int(anime.rating) > 10: # validation of number being integer is already done (by browser? type=integer in html)
+            return render(request, 'animeAdd.html',{'anime': anime, 'animeInfo': None, 'animeGlobal': None, 'wrongRatingRange': True})
+        # data validation end        
+
         if animeInfoGlobalId == -1:         # something was changed in Info category (scraping doesnt count)
             animeGlobal = None
             if animeInfoPersonalId == "":   # there is no entry in Personal anime Info table
-                animeInfoPersonal = AnimeInfoPersonal()
+                animeInfoPersonalNew = AnimeInfoPersonal()
             else:                           # there is an entry in Personal anime info table, update it
-                animeInfoPersonal = AnimeInfoPersonal.objects.filter(id = animeInfoPersonalId)
+                animeInfoPersonalNew = AnimeInfoPersonal.objects.filter(id = animeInfoPersonalId).first()
 
-            animeInfoPersonal.title            = request.POST['globalTitle']
-            animeInfoPersonal.directedBy       = request.POST['directedBy']
-            animeInfoPersonal.producedBy       = request.POST['producedBy']
-            animeInfoPersonal.writtenBy        = request.POST['writtenBy']
-            animeInfoPersonal.musicBy          = request.POST['musicBy']
-            animeInfoPersonal.studio           = request.POST['studio']
-            animeInfoPersonal.licensedBy       = request.POST['licensedBy']
-            animeInfoPersonal.originalNetwork  = request.POST['originalNetwork']
-            animeInfoPersonal.originalRun      = request.POST['originalRun']
-            animeInfoPersonal.episodes         = request.POST['episodes']
-            animeInfoPersonal.save()       #update
+            animeInfoPersonalNew.title            = animeInfoPersonal.title
+            animeInfoPersonalNew.directedBy       = animeInfoPersonal.directedBy
+            animeInfoPersonalNew.producedBy       = animeInfoPersonal.producedBy 
+            animeInfoPersonalNew.writtenBy        = animeInfoPersonal.writtenBy
+            animeInfoPersonalNew.musicBy          = animeInfoPersonal.musicBy 
+            animeInfoPersonalNew.studio           = animeInfoPersonal.studio  
+            animeInfoPersonalNew.licensedBy       = animeInfoPersonal.licensedBy
+            animeInfoPersonalNew.originalNetwork  = animeInfoPersonal.originalNetwork
+            animeInfoPersonalNew.originalRun      = animeInfoPersonal.originalRun 
+            animeInfoPersonalNew.episodes         = animeInfoPersonal.episodes 
+            animeInfoPersonalNew.save()       #update
 
             if animeId == "":   # there is no entry in personal anime table
-                anime = AnimePersonal.objects.create(title=title,status=status,finishedEpisodes=finishedEpisodes,endDate=endDate, rating=rating, comment = comment,animeInfoPersonalId=animeInfoPersonal.id, animeGlobalId=None)
+                animeNew = AnimePersonal() # .objects.create(title=anime.title,status=anime.status,finishedEpisodes=anime.finishedEpisodes,endDate=anime.endDate, rating=anime.rating, comment = anime.comment,animeInfoPersonalId=animeInfoPersonal.id, animeGlobalId=None)
             else:               # there is an entry in table, update it
-                anime = AnimePersonal.objects.filter(animeId=animeId).first()
-                anime.title = title
-                anime.status = status
-                anime.finishedEpisodes = finishedEpisodes
-                anime.endDate = endDate
-                anime.rating = rating
-                anime.comment = comment
-                anime.animeInfoPersonalId = animeInfoPersonal.id
-                anime.animeGlobalId = None
-                anime.save()    # update
+                animeNew = AnimePersonal.objects.filter(animeId=animeId).first()
+
+            animeNew.title = anime.title
+            animeNew.status = anime.status
+            animeNew.finishedEpisodes = anime.finishedEpisodes
+            animeNew.endDate = anime.endDate
+            animeNew.rating = anime.rating
+            animeNew.comment = anime.comment
+            animeNew.animeInfoPersonalId = animeInfoPersonal.id
+            animeNew.animeGlobalId = None
+            animeNew.save()    # update
+            anime = animeNew
         else:                               # no changes in info category
-            animeInfoPersonal = None
+            animeInfoPersonal = None        # set anime info personal to none
+            
             # animeInfoGlobal added to table in WikiScraper, id of it is in animeInfoGlobalId
-            animeGlobal = AnimeGlobal.objects.filter(id = animeInfoGlobalId).first()
+            if animeInfoGlobalId != "":
+                animeGlobal = AnimeGlobal.objects.filter(id = animeInfoGlobalId).first()
+            else:   # there are no personal nor global informations about this anime
+                animeGlobal = None
+                animeInfoGlobalId = None
+
             if animeId == "":   # there is no entry in personal anime table
-                anime = AnimePersonal.objects.create(title=title,status=status,finishedEpisodes=finishedEpisodes,endDate=endDate, rating=rating, comment = comment,animeInfoPersonalId=None, animeGlobalId=animeInfoGlobalId)
+                AnimePersonal.objects.create(title=anime.title,status=anime.status,finishedEpisodes=anime.finishedEpisodes,endDate=anime.endDate, rating=anime.rating, comment = anime.comment,animeInfoPersonalId=None, animeGlobalId=animeInfoGlobalId)
             else:               # there is an entry in table, update it
-                anime = AnimePersonal.objects.filter(animeId=animeId).first()
-                anime.title = title
-                anime.status = status
-                anime.finishedEpisodes = finishedEpisodes
-                anime.endDate = endDate
-                anime.rating = rating
-                anime.comment = comment
-                anime.animeInfoPersonalId = None
-                anime.animeGlobalId = animeInfoGlobalId
-                anime.save()    # update
-
-
-        # TODO data validation
+                animeUpdate = AnimePersonal.objects.filter(animeId=animeId).first()
+                animeUpdate.title = anime.title
+                animeUpdate.status = anime.status
+                animeUpdate.finishedEpisodes = anime.finishedEpisodes
+                animeUpdate.endDate = anime.endDate
+                animeUpdate.rating = anime.rating
+                animeUpdate.comment = anime.comment
+                animeUpdate.animeInfoPersonalId = None
+                animeUpdate.animeGlobalId = animeInfoGlobalId
+                animeUpdate.save()    # update
+                anime = animeUpdate
 
     if request.method == 'GET':
         animeId = request.GET['animeId']
@@ -121,8 +160,7 @@ def animeAdd(request):
         else:
             animeGlobal = AnimeGlobal.objects.filter(id=animeGlobalId).first()
             
-
-    return render(request, 'animeAdd.html',{'anime': anime, 'animeInfoPersonal': animeInfo, 'animeGlobal': animeGlobal})
+    return render(request, 'animeAdd.html',{'anime': anime, 'animeInfo': animeInfo, 'animeGlobal': animeGlobal})
 
 def listModify(request):   
 
@@ -145,24 +183,6 @@ def listModify(request):
     aniEpiList = viewAnimeList(animes)
     return render(request, 'animeList.html',{'aniEpiList': aniEpiList})
 
-
-def sortStatus(request):    # make new query and order by sth TODO performence upgrade -> sort already downloaded data
-    animes = AnimePersonal.objects.all().order_by('status')
-    aniEpiList = viewAnimeList(animes)
-    return render(request, 'animeList.html',{'aniEpiList': aniEpiList})
-
-def sortTitle(request):    # make new query and order by sth TODO performence upgrade -> sort already downloaded data
-    animes = AnimePersonal.objects.all().order_by('title')
-    aniEpiList = viewAnimeList(animes)
-    return render(request, 'animeList.html',{'aniEpiList': aniEpiList})
-
-def sortEndDate(request):    # make new query and order by sth TODO performence upgrade -> sort already downloaded data
-    animes = AnimePersonal.objects.all().order_by('finishedDate')
-    return render(request, 'animeList.html',{'animes': animes})
-
-def sortPremiered(request):    # make new query and order by sth TODO performence upgrade -> sort already downloaded data
-    animes =AnimePersonal.objects.all().order_by('premiered')
-    return render(request, 'animeList.html',{'animes': animes})
 
 def index(request):
     return render(request, 'index.html')

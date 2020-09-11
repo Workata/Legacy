@@ -58,6 +58,8 @@ def licensedByFilter(text):
 
 def filtrData(data, title):
     beginning = data.find("Anime television series")
+    if beginning == -1:
+        return -1
     end = data.find("Episodes")
     data = data[beginning:end+10]   # +10 only when number of epi. uses double digits TODO make it work for different number of digits
 
@@ -89,22 +91,44 @@ def filtrData(data, title):
     return anime
 
 
+
+
 def animeScraper(request):          # TODO Add genre?
     if request.method == 'POST':
         personalTitle = request.POST['personalTitle']
-        suggestedTitles = wiki.search(personalTitle, results = 3, suggestion = True)    # two dimensional array? xd
-        title = suggestedTitles[0][0]
+        if personalTitle == "":
+            return render(request, 'animeAdd.html', {'animeGlobal': None, 'personalTitle': personalTitle, 'noDataFound': True})
+        tempTitle = personalTitle + " (TV series)"
+        suggestedTitles = wiki.search(tempTitle, results = 3, suggestion = True)    # two dimensional array? xd
 
-        if AnimeGlobal.objects.filter(title= title).exists():
-            animeGlobal = AnimeGlobal.objects.filter(title=title).first()
-        else:
-            data = str(wiki.WikipediaPage(title= title).html())
-            data = re.sub('<sup style="font-style:normal;">.*?</sup>', '', data)      # remove 'NA' etc (country shortcuts from infobox)
-            data = re.sub('<[^<]+?>', '', data) # remove html tags
-            animeGlobal = filtrData(data, title)
-            animeGlobal.save() 
+        print(len(suggestedTitles[0]), " ", suggestedTitles)
 
-        return render(request, 'animeAdd.html', {'animeGlobal': animeGlobal, 'personalTitle': personalTitle})
+        if len(suggestedTitles[0]) == 0:   # ([], None)
+            suggestedTitles = wiki.search(personalTitle, results = 3, suggestion = True)
+            if len(suggestedTitles[0]) == 0: # ([], None)
+                return render(request, 'animeAdd.html', {'animeGlobal': None, 'personalTitle': personalTitle, 'noDataFound': True})
+
+        # title = suggestedTitles[0][0]
+        print(suggestedTitles[0][0])
+
+        for title in suggestedTitles[0]:
+            if AnimeGlobal.objects.filter(title= title).exists():
+                animeGlobal = AnimeGlobal.objects.filter(title=title).first()
+                break
+            else:
+                data = str(wiki.WikipediaPage(title= title).html())
+                data = re.sub('<sup style="font-style:normal;">.*?</sup>', '', data)      # remove 'NA' etc (country shortcuts from infobox)
+                data = re.sub('<[^<]+?>', '', data) # remove html tags
+                # print("Data: ",data,"End")
+                animeGlobal = filtrData(data, title)
+                if animeGlobal == -1:
+                    continue
+                else: 
+                    animeGlobal.save() 
+                    return render(request, 'animeAdd.html', {'animeGlobal': animeGlobal, 'personalTitle': personalTitle})
+
+        return render(request, 'animeAdd.html', {'animeGlobal': None, 'personalTitle': personalTitle, 'noDataFound': True}) # , 'data': data
+        # return render(request, 'animeAdd.html', {'animeGlobal': animeGlobal, 'personalTitle': personalTitle})
         # for tests: return render(request, 'animeScraper.html',{"anime": animeGlobal})
 
     return render(request, 'animeScraper.html')

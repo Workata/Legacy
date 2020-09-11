@@ -2,7 +2,7 @@
 a
 {
   text-decoration: none;
-  color: black;
+  color: white;
 }
 .input
 {
@@ -19,60 +19,61 @@ a
 
 #globalTitle
 {
-  margin-left: 50px;
-  width: 300px;
+  margin-left: 77px;
+  width: 275px;
 }
 
 #directedBy
 {
-  margin-left: 2px;
-  width: 300px;
+  margin-left: 30px;
+  width: 275px;
 }
 
 #producedBy
 {
-  width: 300px;
+  width: 275px;
+  margin-left: 23px;
 }
 
 #writtenBy
 {
-  width: 300px;
-  margin-left: 15px;
+  width: 275px;
+  margin-left: 39px;
 }
 
 #musicBy
 {
-  width: 300px;
-  margin-left: 25px;
+  width: 275px;
+  margin-left: 47px;
 }
 
 #studio
 {
-  width: 300px;
-  margin-left: 40px;
+  width: 275px;
+  margin-left: 65px;
 }
 
 #licensedBy
 {
-  width: 300px;
-  margin-left: 5px;
+  width: 275px;
+  margin-left: 27px;
 }
 
-#orginalNetwork
+#originalNetwork
 {
   width: 275px;
 }
 
-#orginalRun
+#originalRun
 {
-  width: 300px;
-  margin-left: 10px;
+  width: 275px;
+  margin-left: 30px;
 }
 
 #globalEpisodes
 {
-  width: 300px;
-  margin-left: 15px;
+  width: 275px;
+  margin-left: 45px;
 }
 
 
@@ -92,42 +93,45 @@ a
 #personalTitle
 {
   margin-top: 30px;
-  margin-left: 70px;
-  width: 250px;
+  margin-left: 50px;
+  width: 275px;
 }
 
 #personalStatus
 {
-  margin-left: 100px;
+  margin-left: 35px;
+  width: 275px;
 }
 
 #personalEpisodes
 {
-  margin-left: 70px;
-  width: 50px;
+  margin-left: 15px;
+  width: 275px;
 }
 
 #personalEndDate
 {
-  margin-left: 90px;
+  margin-left: 18px;
+  width: 275px;
 }
 
 #personalRating
 {
   width: 50px;
-  margin-left: 145px;
+  margin-left: 35px;
+  width: 275px;
 }
 
 #personalComment
 {
-  width: 250px;
-  margin-left: 32px;
+  width: 275px;
+  margin-left: 13px;
 }
 
 .submitButton
 {
     margin-left: 130px;
-    margin-top: 40px;
+    margin-top: 30px;
     width: 120px;
     height: 45px;
     cursor: pointer;
@@ -139,6 +143,12 @@ a
     background-color: white;
 }
 
+.submitButton:hover  /* When I write it like this: ".submitButton :hover" it doesnt work (but why?)*/
+{
+    color:white !important;
+    background-color: black !important;
+}
+
 .aTagButton
 {
     width: 200px;
@@ -147,11 +157,7 @@ a
     border-radius: 10px;
 }
 
-.submitButton :hover
-{
-    color:white;
-    background-color: black;
-}
+
 
 #findInfoButton /*div*/
 {
@@ -195,6 +201,20 @@ a
     margin-right: auto;
     margin-top: 120px;
 }
+
+#backButton
+{
+  width: 50px;
+  height: 50px;
+  background-image: url("/static/img/grey_wash_wall.png");
+  border-radius: 50%;
+  cursor: pointer;
+  position: absolute;
+  top: 7px;
+  right: 70px;
+  text-align: center;
+}
+
 
 /* disable arrows from number input*/
 /* Chrome, Safari, Edge, Opera */

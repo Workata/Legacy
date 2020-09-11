@@ -60,7 +60,7 @@
 .icon-plus:hover { color: black;} 
 .icon-floppy:before { content: '\e802'; font-size: 30px; margin-top: 3px; margin-right: 5px;} /* '' */
 .icon-floppy:hover { color: black; }
-.icon-left:before { content: '\e803'; font-size: 35px; margin-top: 9px;} /* '' */
+.icon-left:before { content: '\e803'; font-size: 35px; margin-top: 9px; } /* '' */
 .icon-left:hover { color: black;} 
 .icon-up-open:before { content: '\e804'; } /* '' */
 .icon-down-open:before { content: '\e805'; } /* '' */

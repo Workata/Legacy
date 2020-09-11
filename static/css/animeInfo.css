@@ -15,6 +15,53 @@
     margin-top: 125px;
 }
 
+a
+{
+    text-decoration: none;
+    color: white;        /*https://stackoverflow.com/questions/8739665/is-background-colornone-valid-css?rq=1*/
+}
+
+.aTagButton
+{
+    width: 120px;
+    height: 45px;
+    display: block;
+    border-radius: 10px;
+    color: black;
+}
+
+.aTagButton:hover
+{
+    color: white;
+}
+
+#modifyButton
+{
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    margin-top: 60px;
+
+    width: 120px;
+    height: 45px;
+
+    line-height: 45px;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: 700;
+    outline: none;
+    border: none;
+    border-radius: 10px;
+    color: black ;
+    background-color: white;
+}
+
+#modifyButton:hover  /* TODO why it doesnt work*/
+{
+    color:white !important;
+    background-color: black !important;
+}
+
 #header
 {
     font-size: 40px;
@@ -41,11 +88,6 @@
     margin-top:8px;
 }
 
-a
-{
-    text-decoration: none;
-    color: white;
-}
 
 #backButton
 {
