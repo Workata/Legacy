@@ -94,6 +94,11 @@ def filtrData(data, title):
 
 
 def animeScraper(request):          # TODO Add genre?
+
+    user = request.user
+    if not user.is_authenticated:
+        return redirect('login')
+
     if request.method == 'POST':
         personalTitle = request.POST['personalTitle']
         if personalTitle == "":

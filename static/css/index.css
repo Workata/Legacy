@@ -47,3 +47,11 @@ a
     display: block;
     border-radius: 10px;
 }
+
+#headMenu
+{
+    position: absolute;
+    top: 70px;
+    right: 70px;
+    color: white;
+}

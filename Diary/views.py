@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from Diary.models import AnimePersonal
 from Diary.models import AnimeInfoPersonal
@@ -22,21 +22,27 @@ def viewAnimeList(animes):
 def home(request):
     return render(request, 'index.html')
 
-def anime(request):
-    return render(request, 'anime.html')
+def animeList(request):   
 
-def animeList(request):         # TODO make default sort/order
+    user = request.user
+    if not user.is_authenticated:
+        return redirect('login')
+
     sortBy = request.GET['by']
     order = request.GET['order']
     if order == "desc": 
         order = "-"
     else:   # asc
         order = ""
-    animes = AnimePersonal.objects.all().order_by(order+sortBy) # https://stackoverflow.com/questions/9834038/django-order-by-query-set-ascending-and-descending tldr: "-title" -> desc, "title" -> asc 
+    animes = AnimePersonal.objects.filter(userId=user.id).order_by(order+sortBy) # https://stackoverflow.com/questions/9834038/django-order-by-query-set-ascending-and-descending tldr: "-title" -> desc, "title" -> asc 
     aniEpiList = viewAnimeList(animes)
     return render(request, 'animeList.html',{'aniEpiList': aniEpiList})
 
 def animeAdd(request):   
+
+    user = request.user
+    if not user.is_authenticated:
+        return redirect('login')
             
     if request.method == 'POST':
         anime = AnimePersonal()
@@ -99,12 +105,13 @@ def animeAdd(request):
             animeInfoPersonalNew.originalNetwork  = animeInfoPersonal.originalNetwork
             animeInfoPersonalNew.originalRun      = animeInfoPersonal.originalRun 
             animeInfoPersonalNew.episodes         = animeInfoPersonal.episodes 
+            animeInfoPersonalNew.userId           = user.id
             animeInfoPersonalNew.save()       #update
 
             if animeId == "":   # there is no entry in personal anime table
                 animeNew = AnimePersonal() # .objects.create(title=anime.title,status=anime.status,finishedEpisodes=anime.finishedEpisodes,endDate=anime.endDate, rating=anime.rating, comment = anime.comment,animeInfoPersonalId=animeInfoPersonal.id, animeGlobalId=None)
             else:               # there is an entry in table, update it
-                animeNew = AnimePersonal.objects.filter(animeId=animeId).first()
+                animeNew = AnimePersonal.objects.filter(id=animeId).first()
 
             animeNew.title = anime.title
             animeNew.status = anime.status
@@ -114,6 +121,7 @@ def animeAdd(request):
             animeNew.comment = anime.comment
             animeNew.animeInfoPersonalId = animeInfoPersonal.id
             animeNew.animeGlobalId = None
+            animeNew.userId = user.id
             animeNew.save()    # update
             anime = animeNew
         else:                               # no changes in info category
@@ -127,19 +135,20 @@ def animeAdd(request):
                 animeInfoGlobalId = None
 
             if animeId == "":   # there is no entry in personal anime table
-                AnimePersonal.objects.create(title=anime.title,status=anime.status,finishedEpisodes=anime.finishedEpisodes,endDate=anime.endDate, rating=anime.rating, comment = anime.comment,animeInfoPersonalId=None, animeGlobalId=animeInfoGlobalId)
+                animeNew = AnimePersonal()
             else:               # there is an entry in table, update it
-                animeUpdate = AnimePersonal.objects.filter(animeId=animeId).first()
-                animeUpdate.title = anime.title
-                animeUpdate.status = anime.status
-                animeUpdate.finishedEpisodes = anime.finishedEpisodes
-                animeUpdate.endDate = anime.endDate
-                animeUpdate.rating = anime.rating
-                animeUpdate.comment = anime.comment
-                animeUpdate.animeInfoPersonalId = None
-                animeUpdate.animeGlobalId = animeInfoGlobalId
-                animeUpdate.save()    # update
-                anime = animeUpdate
+                animeNew = AnimePersonal.objects.filter(id=animeId).first()
+            animeNew.title = anime.title
+            animeNew.status = anime.status
+            animeNew.finishedEpisodes = anime.finishedEpisodes
+            animeNew.endDate = anime.endDate
+            animeNew.rating = anime.rating
+            animeNew.comment = anime.comment
+            animeNew.animeInfoPersonalId = None
+            animeNew.animeGlobalId = animeInfoGlobalId
+            animeNew.userId = user.id
+            animeNew.save()    # update
+            anime = animeNew
 
     if request.method == 'GET':
         animeId = request.GET['animeId']
@@ -164,6 +173,10 @@ def animeAdd(request):
 
 def listModify(request):   
 
+    user = request.user
+    if not user.is_authenticated:
+        return redirect('login')
+
     animes = AnimePersonal.objects.all().order_by('title')
 
     for anime in animes:    # check all rows (!!! :( ) and save data, TODO performence upgrade?
@@ -184,12 +197,13 @@ def listModify(request):
     return render(request, 'animeList.html',{'aniEpiList': aniEpiList})
 
 
-def index(request):
-    return render(request, 'index.html')
-
 def animeInfo(request):
+
+    user = request.user
+    if not user.is_authenticated:
+        return redirect('login')
+
     animeId = request.GET['animeId']
-    print("XD", animeId)
     animeInfoId = request.GET['animeInfoId']
     animeGlobalId = request.GET['animeGlobalId']
     if animeGlobalId == "None":
@@ -200,6 +214,11 @@ def animeInfo(request):
 
 
 def animeDelete(request):
+
+    user = request.user
+    if not user.is_authenticated:
+        return redirect('login')
+
     animePersonalId = request.GET['animeId']
     AnimePersonal.objects.filter(id=animePersonalId).delete()
     animes = AnimePersonal.objects.all().order_by('title')

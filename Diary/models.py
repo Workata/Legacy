@@ -11,6 +11,7 @@ class AnimePersonal(models.Model):
     comment = models.TextField()
     animeInfoPersonalId = models.IntegerField()
     animeGlobalId = models.IntegerField()
+    userId = models.IntegerField()
 
 class AnimeInfoPersonal(models.Model):
     title = models.CharField(max_length=250)
@@ -23,3 +24,4 @@ class AnimeInfoPersonal(models.Model):
     originalNetwork =  models.CharField(max_length=250)
     originalRun = models.CharField(max_length=250)
     episodes = models.IntegerField()
+    userId = models.IntegerField()

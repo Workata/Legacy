@@ -96,6 +96,22 @@ table, th, td
   color: white;
 }
 
+#exportButton
+{
+  width: 125px;
+  height: 50px;
+  font-size: 20px;
+  font-weight: 700;
+  border-radius: 10px;
+  background-image: url("/static/img/grey_wash_wall.png");
+  cursor: pointer;
+  position: absolute;
+  top: 70px;
+  right: 200px;
+  text-align: center;
+  line-height: 50px;  /*https://stackoverflow.com/questions/2939914/how-do-i-vertically-align-text-in-a-div*/
+}
+
 #addButton
 {
   width: 50px;

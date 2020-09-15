@@ -1,0 +1,57 @@
+#registerFormContainer
+{
+    width: 300px;
+    height: 450px;
+    background-image: url("/static/img/grey_wash_wall.png");
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 150px;
+    border-radius: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 20px;
+}
+
+#formTitle
+{
+    font-size: 36px;
+    font-weight: 700;
+    color: white;
+    width: 300px;
+    text-align: center;
+    margin-top: 20px;
+
+}
+
+#registerForm
+{
+    color: white;
+    margin-top: 60px;
+}
+
+#passwordInput
+{
+    margin-top: 15px;
+    margin-bottom: 20px;
+}
+
+#registerButton
+{
+    margin-left: 80px;
+    margin-top: 30px;
+    width: 120px;
+    height: 45px;
+    cursor: pointer;
+    font-size: 20px;
+    outline: none;
+    border: none;
+    border-radius: 10px;
+    color: black;
+    background-color: white;
+}
+
+#registerButton:hover  /* When I write it like this: ".submitButton :hover" it doesnt work (but why?)*/
+{
+    color:white !important;
+    background-color: black !important;
+}

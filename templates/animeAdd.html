@@ -14,6 +14,22 @@
 {% if noDataFound %}
     <script>alert("No data found");</script>
 {% endif %}
+{% if wrongTitle %}
+<script>alert("Title is blank");</script>
+{% endif %}
+{% if wrongStatus %}
+<script>alert("Wrong status");</script>
+{% endif %}
+{% if wrongEpisodes%}
+<script>alert("You have to input number of finished episodes");</script>
+{% endif %}
+{% if wrongDate %}
+<script>alert("You have to input correct date");</script>
+{% endif %}
+{% if wrongRatingRange %}
+<script>alert("Wrong rating range");</script>
+{% endif %}
+
 
 <span id="backButton">
     <a href="/animeList?by=title&order=asc"> 
@@ -30,29 +46,14 @@
         <form action="/animeAdd?animeId={{anime.id}}&animeInfoId={{animeInfoPersonal.id}}&animeGlobalId={{animeGlobal.id}}" method="post">
             {% csrf_token %}
             
-            {% if wrongTitle %}
-                <script>alert("Title is blank");</script>
-            {% endif %}
             <label for="personalTitle">Title: </label>
             <input type="text" value="{{personalTitle}}{{anime.title}}" class="input" name="personalTitle" id="personalTitle" placeholder="Title"><br>
-            {% if wrongStatus %}
-                <script>alert("Wrong status");</script>
-            {% endif %}
             <label for="personalStatus">Status: </label>
             <input type="text" class="input" value="{{anime.status}}" list="statusEnum" name="status" id="personalStatus" placeholder="Status"><br>
-            {% if wrongEpisodes%}
-                <script>alert("You have to input number of finished episodes");</script>
-            {% endif %}
             <label for="personalEpisodes">Episodes: </label>
             <input type="number" class="input" value="{{anime.finishedEpisodes}}" name="finishedEpisodes" id="personalEpisodes" placeholder="Finished episodes"><br>
-            {% if wrongDate %}
-                <script>alert("You have to input correct date");</script>
-            {% endif %}
             <label for="personalEndDate">End date: </label>
             <input type="date" class="input" value="{{anime.endDate}}" name="endDate" placeholder="Date of finish" id="personalEndDate"><br>
-            {% if wrongRatingRange %}
-                <script>alert("Wrong rating range");</script>
-            {% endif %}
             <label for="personalRating">Rating: </label>
             <input type="number" list="ratingEnum" value="{{anime.rating}}" class="input" name="rating" id="personalRating" placeholder="Rating"><br>
             <label for="personalComment">Comment: </label>

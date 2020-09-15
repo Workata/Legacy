@@ -18,8 +18,11 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
+# path pattern -> path('accounts', include('accounts.urls'))    -> domain/accounts/login, domain/account/register
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('Diary.urls')),
-    path('', include('WikiScraper.urls'))
+    path('', include('WikiScraper.urls')),
+    path('', include('exportExcel.urls')),
+    path('accounts/', include('accounts.urls'))
 ]

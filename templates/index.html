@@ -10,6 +10,17 @@
 
 {% block content %}
 
+<div id="headMenu">
+    {% if user.is_authenticated %}
+        Hello, {{user.first_name}}
+        <a href="accounts/logout">Log out</a>
+    {% else %}
+        <a href="accounts/login">Login</a>
+        <a href="accounts/register">Register</a>
+    {% endif %}
+</div>
+
+
 <!-- content here-->
 
 <div id="menu">

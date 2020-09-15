@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+
+<link rel="stylesheet" href="{% static 'css/register.css' %}" type="text/css" />
+
+{% endblock %}
+
+{% block content %}
+
+{% if passNotEqual %}
+    <script>alert("Passwords don't match");</script>
+{% endif %}
+{% if usernameTaken %}
+    <script>alert("This username is taken");</script>
+{% endif %}
+{% if emailExists %}
+    <script>alert("This email is already is use");</script>
+{% endif %}
+
+<div id="registerFormContainer">
+    <div id="formTitle">Register</div>
+    <form action="/accounts/register" method="post" id="registerForm">
+        {% csrf_token %}
+        <input type="text" name="first_name" placeholder="First name"><br>
+        <input type="text" name="last_name" placeholder="Last name"><br>
+        <input type="text" name="username" placeholder="Username"><br>
+        <input type="email" name="email" placeholder="E-mail"><br>
+        <input type="password" name="password1" placeholder="Password"><br>
+        <input type="password" name="password2" placeholder="Confirm password"><br>
+
+        <input type="submit" id="registerButton" value="Register">
+    </form>
+</div>
+
+{% endblock %}
