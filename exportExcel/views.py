@@ -120,7 +120,7 @@ def importAnime(request):
             anime.status = row[2]  
             endDateString = row[3] #2020-08-24 00:00:00 (have to change this to -> 2020-08-24)
             endDate =  endDateString[:10]
-            anime.endDate = endDate
+            anime.endDate = endDate             #test
             anime.rating = int(row[4])
             anime.comment =  row[5]
             anime.userId = user.id
