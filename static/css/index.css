@@ -1,7 +1,7 @@
 #menu
 {
     width: 300px;
-    height: 400px;
+    height: 430px;
     padding-top: 50px;
     border-radius: 10px;
     background-image: url("/static/img/grey_wash_wall.png");
@@ -50,8 +50,61 @@ a
 
 #headMenu
 {
+    border-radius: 10px;
+    background-image: url("/static/img/grey_wash_wall.png");
+    width: 240px;
+    height: 50px;
     position: absolute;
-    top: 70px;
+    top: 50px;
     right: 70px;
     color: white;
+}
+
+.headMenuButton
+{
+    float: left;
+    text-align: center;
+    width: 70px;
+    height: 30px;
+    border-radius: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white;
+
+
+    margin-top: 10px;
+    margin-left: 30px;
+    line-height: 30px;  /*https://stackoverflow.com/questions/2939914/how-do-i-vertically-align-text-in-a-div*/
+    font-size: 13px;
+    font-weight: 700;
+    color: black;
+    
+}
+
+.headMenuButton :hover
+{   
+    color: white;
+    background-color: black;
+}
+
+.aTagHeadButton
+{
+    width: 70px;
+    height: 30px;
+    display: block;
+    border-radius: 10px;
+}
+
+#headMenuButtonLogged
+{
+    margin-top: 10px;
+    margin-left: 50px;
+}
+
+
+#greetingText
+{
+    float: left;
+    margin-top: 15px;
+    margin-left: 10px;
 }

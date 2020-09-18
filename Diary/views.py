@@ -105,7 +105,6 @@ def animeAdd(request):
             animeInfoPersonalNew.originalNetwork  = animeInfoPersonal.originalNetwork
             animeInfoPersonalNew.originalRun      = animeInfoPersonal.originalRun 
             animeInfoPersonalNew.episodes         = animeInfoPersonal.episodes 
-            animeInfoPersonalNew.userId           = user.id
             animeInfoPersonalNew.save()       #update
 
             if animeId == "":   # there is no entry in personal anime table

@@ -4,19 +4,26 @@
 {% block head %}
 
 <link rel="stylesheet" href="{% static 'css/login.css' %}" type="text/css" />
+<link rel="stylesheet" href="{% static 'icons/icon-set-4-all/css/fontello.css' %}" type="text/css" />
 
 {% endblock %}
 
 {% block content %}
 
+<span id="backButton">
+    <a href="/"> 
+        <i class="icon-left"></i>
+    </a>
+</span>
+
 <div id="loginFormContainer">
-    <div id="formTitle">Login</div>
+    <div id="formTitle">Log in</div>
     <form action="/accounts/login" method="post" id="loginForm">
         {% csrf_token %}
         <label for="usernameInput">Username:</label>
-        <input type="text" id="usernameInput" name="username" placeholder="Username"><br>
+        <input type="text" id="usernameInput" class="input" name="username" placeholder="Username"><br>
         <label for=passwordInput">Password:</label>
-        <input type="password" id="passwordInput" name="password" placeholder="Password"><br>
+        <input type="password" id="passwordInput" class="input" name="password" placeholder="Password"><br>
 
         <input type="submit" id="loginButton" value="Log in">
     </form>

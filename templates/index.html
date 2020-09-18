@@ -12,12 +12,13 @@
 
 <div id="headMenu">
     {% if user.is_authenticated %}
-        Hello, {{user.first_name}}
-        <a href="accounts/logout">Log out</a>
+        <span id="greetingText">Hello, {{user.first_name}}</span>
+        <div class="headMenuButton" id="headMenuButtonLogged"><a href="accounts/logout" class="aTagHeadButton">Log out</a></div>
     {% else %}
-        <a href="accounts/login">Login</a>
-        <a href="accounts/register">Register</a>
+        <div class="headMenuButton"><a href="accounts/login" class="aTagHeadButton">Log in</a></div>
+        <div class="headMenuButton"><a href="accounts/register" class="aTagHeadButton">Register</a></div>
     {% endif %}
+    <div style="clear:both"></div>
 </div>
 
 
@@ -29,6 +30,7 @@
     <div class="menuButton"> <a href="/animeList" class="aTagButton">Films</a> </div><br>
     <div class="menuButton"> <a href="/animeList" class="aTagButton">TV Series</a> </div><br>
     <div class="menuButton"> <a href="/animeList" class="aTagButton">Books</a> </div><br>
+    <div class="menuButton"> <a href="/animeList" class="aTagButton">Games</a> </div><br>
 </div>
 
 

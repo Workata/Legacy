@@ -1,7 +1,7 @@
 #registerFormContainer
 {
-    width: 300px;
-    height: 450px;
+    width: 340px;
+    height: 500px;
     background-image: url("/static/img/grey_wash_wall.png");
     margin-left: auto;
     margin-right: auto;
@@ -12,12 +12,32 @@
     padding-top: 20px;
 }
 
+.input
+{
+ /* background-color: white;*/
+  border-radius: 10px;
+  outline: none;
+  border: none;
+  text-align: center;
+  height: 30px;
+  width: 200px;
+  background-image: url("/static/img/footer_lodyas.png");
+  color: white;
+  margin-top: 15px;
+}
+
+a
+{
+  text-decoration: none;
+  color: white;
+}
+
 #formTitle
 {
     font-size: 36px;
     font-weight: 700;
     color: white;
-    width: 300px;
+    width: 340px;
     text-align: center;
     margin-top: 20px;
 
@@ -26,18 +46,26 @@
 #registerForm
 {
     color: white;
-    margin-top: 60px;
+    margin-top: 30px;
 }
 
-#passwordInput
+
+#backButton
 {
-    margin-top: 15px;
-    margin-bottom: 20px;
+  width: 50px;
+  height: 50px;
+  background-image: url("/static/img/grey_wash_wall.png");
+  border-radius: 50%;
+  cursor: pointer;
+  position: absolute;
+  top: 7px;
+  right: 70px;
+  text-align: center;
 }
 
 #registerButton
 {
-    margin-left: 80px;
+    margin-left: 100px;
     margin-top: 30px;
     width: 120px;
     height: 45px;
@@ -55,3 +83,34 @@
     color:white !important;
     background-color: black !important;
 }
+
+#firstNameInput
+{
+    margin-left: 10px;
+}
+
+#lastNameInput
+{
+    margin-left: 10px;
+}
+
+#usernameInput
+{
+    margin-left: 10px;
+}
+
+#emailInput
+{
+    margin-left: 36px;
+}
+
+#passwordInput
+{
+    margin-left: 12px;
+}
+
+#password2Input
+{
+    margin-left: 12px;
+}
+

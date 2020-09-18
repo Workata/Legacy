@@ -24,4 +24,3 @@ class AnimeInfoPersonal(models.Model):
     originalNetwork =  models.CharField(max_length=250)
     originalRun = models.CharField(max_length=250)
     episodes = models.IntegerField()
-    userId = models.IntegerField()
