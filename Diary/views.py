@@ -205,10 +205,12 @@ def animeInfo(request):
     animeId = request.GET['animeId']
     animeInfoId = request.GET['animeInfoId']
     animeGlobalId = request.GET['animeGlobalId']
-    if animeGlobalId == "None":
-        anime = AnimeGlobal('none','none','none','none','none','none','none','none','none',episodes=0)
-    else:
+    if animeGlobalId != "None":
         anime = AnimeGlobal.objects.filter(id=animeGlobalId).first()
+    elif animeInfoId != "None":
+        anime = AnimeInfoPersonal.objects.filter(id = animeInfoId).first()
+    else:
+        anime = AnimeGlobal('none','none','none','none','none','none','none','none','none',episodes=0)
     return render(request, 'animeInfo.html',{'anime': anime, 'animeId':animeId, 'animeInfoId': animeInfoId, 'animeGlobalId': animeGlobalId})
 
 

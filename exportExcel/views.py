@@ -112,10 +112,32 @@ def importAnime(request):
             excelData.append(rowData)
 
         excelData.pop(0)    # Delete row with column titles (first row)
+
+        # print(excelData)
+
         for row in excelData:
+
             anime = AnimePersonal()
-            anime.title = row[0]
             episodesString = row[1]
+            # check if anime contains additional informations (if yes create object from AnimeInfoPersonal class)
+
+            if row[6] != 'None' or row[7] != 'None' or row[8] != 'None' or row[9] != 'None' or row[10] != 'None' or row[11] != 'None' or row[12] != 'None' or row[13] != 'None' or row[14] != 'None' or episodesString[2] != '0':
+                animeInfo = AnimeInfoPersonal()
+                animeInfo.title = row[6]
+                animeInfo.directedBy = row[7]
+                animeInfo.producedBy = row[8]
+                animeInfo.writtenBy = row[9]
+                animeInfo.musicBy = row[10]
+                animeInfo.studio = row[11]
+                animeInfo.licensedBy = row[12]
+                animeInfo.originalNetwork = row[13]
+                animeInfo.originalRun = row[14]
+                animeInfo.episodes = int(episodesString[2])
+                animeInfo.save()
+
+                anime.animeInfoPersonalId = animeInfo.id
+
+            anime.title = row[0]
             anime.finishedEpisodes = int(episodesString[0])    #print(episodesStri)
             anime.status = row[2]  
             endDateString = row[3] #2020-08-24 00:00:00 (have to change this to -> 2020-08-24)
