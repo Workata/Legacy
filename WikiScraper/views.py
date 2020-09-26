@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 import wikipedia as wiki
-import wptools
+# import wptools
 import re
 from WikiScraper.models import AnimeGlobal
 
