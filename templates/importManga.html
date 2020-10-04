@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+
+
+{% endblock %}
+
+{% block content %}
+
+<form action="importManga" method="post" enctype="multipart/form-data"> <!--enctype="multipart/form-data" - must have in file upload!!!-->
+    {% csrf_token %}
+
+    <input type="file" id="myfile" name="myfile">
+
+    <input type="submit">
+</form>
+
+
+<!--<div style="color: white;">
+    Title: {{anime.title}} <br>
+    Directed by: {{anime.directedBy}} <br>
+    Produced by: {{anime.producedBy}} <br> 
+    Written by: {{anime.writtenBy}} <br>
+    Music by: {{anime.musicBy}} <br>
+    Studio: {{anime.studio}} <br>
+    Licensed by: {{anime.licensedBy}} <br>
+    Original network: {{anime.originalNetwork}} <br>
+    Number of episodes: {{anime.episodes}} <br>
+</div>-->
+
+{% endblock %}

@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+
+<link rel="stylesheet" href="{% static 'css/animeList.css' %}" type="text/css" />
+<link rel="stylesheet" href="{% static 'icons/icon-set-4-all/css/fontello.css' %}" type="text/css" />
+<script type="text/javascript" src="{% static 'js/listFun.js' %}"></script>
+
+{% endblock %}
+
+{% block content %}
+
+<!-- content here-->
+
+<span id="backButton">
+    <a href="/"> 
+        <i class="icon-left"></i>
+    </a>
+</span>
+
+<span id="addButton">
+    <a href="/mangaAdd?mangaId=None&mangaInfoId=None&mangaGlobalId=None"> 
+        <i class="icon-plus"></i>
+    </a>
+</span>
+
+<span id="exportButton">
+    <a class="aTagButton" href="/exportManga"> 
+        Export
+    </a>
+</span>
+
+<span id="importButton">
+    <a class="aTagButton" href="/importManga"> 
+        Import
+    </a>
+</span>
+
+
+<div id="animeList">
+
+    <table style="width: 100%">
+
+        <tr>    <!-- DESC = reversed alphabetical order-->
+            <th class="columnName">Title
+                <a href="/mangaList?by=title&order=asc"><i class="icon-up-open"></i>
+                </a>
+                <a href="/mangaList?by=title&order=desc"><i class="icon-down-open"></i>
+                </a>
+            </th>
+            <th class="columnName">Volumes</th> 
+            <th class="columnName">Status
+                <a href="/mangaList?by=status&order=asc"><i class="icon-up-open"></i>
+                </a>
+                <a href="/mangaList?by=status&order=desc"><i class="icon-down-open"></i>
+                </a>
+            </th>
+            <th class="columnName">End date <!-- Correct phrase?-->
+                <a href="/mangaList?by=endDate&order=asc"><i class="icon-up-open"></i>
+                </a>
+                <a href="/mangaList?by=endDate&order=desc"><i class="icon-down-open"></i>
+                </a>
+            </th>   
+            <th class="columnName">Rating <!-- Correct word-->
+                <a href="/mangaList?by=rating&order=asc"><i class="icon-up-open"></i>
+                </a>
+                <a href="/mangaList?by=rating&order=desc"><i class="icon-down-open"></i>
+                </a>
+            </th>  
+            <th class="columnName">Comment</th>
+            <th class="columnName">Info</th>
+            <th class="columnName">Delete</th>
+        </tr>
+    
+        <form action="mangaListModify?by=title&order=asc" method="post">
+            {% csrf_token %}
+
+            {% for manga, volume in mangasVolumesList %}
+                <tr>
+                    <td class="cell">
+                        <input class="listInput" type="text" value="{{manga.title}}" name="title{{manga.id}}" placeholder="Title">
+                    </td>
+                    <td class="cell">
+                        <button type="button" onclick="decrementEpi('{{manga.id}}')">-</button>
+                        <span class="epiWrapper">
+                            <input type="number" id="numOfEpiWatched{{manga.id}}" class="epiInputLeft" value="{{manga.finishedVolumes}}" name="finishedVolumes{{manga.id}}">/<input type="number" class="epiInputRight" value="{{volume}}" name="">
+                        </span>
+                        <button type="button" onclick="incrementEpi('{{manga.id}}')">+</button>
+                    </td>
+                    <td class="cell">
+                        <input type="text" value="{{manga.status}}" list="statusEnum" name="status{{manga.id}}" placeholder="Status">
+                    </td>
+                    <td class="cell">
+                        <input type="date" value='{{manga.endDate}}' name="endDate{{manga.id}}" >
+                    </td>
+                    <td class="cell">
+                        <input type="number" list="ratingEnum"  id="ratingCell" value='{{manga.rating}}' name="rating{{manga.id}}"><span style="color: white;"> /10</span>
+                    </td>
+                    <td class="cell">
+                        <input type="text" value="{{manga.comment}}" name="comment{{manga.id}}" placeholder="Comment">
+                    </td>
+                    <td class="cell">
+                        <a href="/mangaInfo?mangaId={{manga.id}}&mangaInfoId={{manga.mangaInfoPersonalId}}&mangaGlobalId={{manga.mangaGlobalId}}"> <i class="icon-info"></i> </a>
+                    </td>
+                    <td class="cell">
+                        <a href="/mangaDelete?mangaId={{manga.id}}"> <i class="icon-trash"></i> </a>
+                    </td>
+                </tr>
+            {% endfor %}
+
+            <button id="saveButton" type="submit"> 
+                <i class="icon-floppy"></i>
+            </button>
+
+        </form>
+
+    </table>
+
+</div>
+
+<!-- TODO show all possibilities when one is chosen-->
+
+<datalist id="statusEnum">
+    <option value="Reading">
+    <option value="Want to read">
+    <option value="Finished">
+    <option value="Abandoned">  
+</datalist>
+
+<datalist id="ratingEnum">
+    <option value="1">
+    <option value="2">
+    <option value="3">
+    <option value="4">  
+    <option value="5">
+    <option value="6">
+    <option value="7">
+    <option value="8">
+    <option value="9">
+    <option value="10">                
+</datalist>
+
+{% endblock %}

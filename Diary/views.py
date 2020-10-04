@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+
 from Diary.models import AnimePersonal
 from Diary.models import AnimeInfoPersonal
 from WikiScraper.models import AnimeGlobal
@@ -170,7 +171,7 @@ def animeAdd(request):
             
     return render(request, 'animeAdd.html',{'anime': anime, 'animeInfo': animeInfo, 'animeGlobal': animeGlobal})
 
-def listModify(request):   
+def animeListModify(request):   
 
     user = request.user
     if not user.is_authenticated:
@@ -202,8 +203,8 @@ def animeInfo(request):
     if not user.is_authenticated:
         return redirect('login')
 
-    animeId = request.GET['animeId']
-    animeInfoId = request.GET['animeInfoId']
+    animeId       = request.GET['animeId']
+    animeInfoId   = request.GET['animeInfoId']
     animeGlobalId = request.GET['animeGlobalId']
     if animeGlobalId != "None":
         anime = AnimeGlobal.objects.filter(id=animeGlobalId).first()
@@ -223,4 +224,6 @@ def animeDelete(request):
     animePersonalId = request.GET['animeId']
     AnimePersonal.objects.filter(id=animePersonalId).delete()
     animes = AnimePersonal.objects.all().order_by('title')
-    return render(request, 'animeList.html',{'animes': animes})
+    aniEpiList = viewAnimeList(animes)
+    return render(request, 'animeList.html',{'aniEpiList': aniEpiList})
+

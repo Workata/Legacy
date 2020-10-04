@@ -1,0 +1,231 @@
+/*textarea, input*/
+a
+{
+  text-decoration: none;
+  color: white;
+}
+.input
+{
+ /* background-color: white;*/
+  border-radius: 10px;
+  outline: none;
+  border: none;
+  text-align: center;
+  height: 30px;
+  background-image: url("/static/img/footer_lodyas.png");
+  color: white;
+  margin-top: 15px;
+}
+
+#globalTitle
+{
+  margin-left: 77px;
+  width: 275px;
+}
+
+#writtenBy
+{
+  width: 275px;
+  margin-left: 39px;
+}
+
+#illustratedBy
+{
+  width: 275px;
+  margin-left: 20px;
+}
+
+#publishedBy
+{
+  width: 275px;
+  margin-left: 20px;
+}
+
+#englishPublisher
+{
+  width: 265px;
+  margin-left: 2px;
+}
+
+#imprint
+{
+  width: 275px;
+  margin-left: 63px;
+}
+
+#magazine
+{
+  width: 275px;
+  margin-left: 45px;
+}
+
+#demographic
+{
+  width: 275px;
+  margin-left: 20px;
+}
+
+#originalRun
+{
+  width: 275px;
+  margin-left: 30px;
+}
+
+#globalVolumes
+{
+  width: 275px;
+  margin-left: 50px;
+}
+
+
+#leftBoxTitle
+{
+  font-size: 50px;
+  margin-left: 135px;
+}
+
+#rigthBoxTitle
+{
+  font-size: 50px;
+  margin-left: 60px;
+}
+
+
+#personalTitle
+{
+  margin-top: 30px;
+  margin-left: 50px;
+  width: 275px;
+}
+
+#personalStatus
+{
+  margin-left: 35px;
+  width: 275px;
+}
+
+#personalVolumes
+{
+  width: 275px;
+  margin-left: 20px;
+}
+
+#personalEndDate
+{
+  margin-left: 18px;
+  width: 275px;
+}
+
+#personalRating
+{
+  width: 50px;
+  margin-left: 35px;
+  width: 275px;
+}
+
+#personalComment
+{
+  width: 275px;
+  margin-left: 13px;
+}
+
+.submitButton
+{
+    margin-left: 130px;
+    margin-top: 30px;
+    width: 120px;
+    height: 45px;
+    cursor: pointer;
+    font-size: 20px;
+    outline: none;
+    border: none;
+    border-radius: 10px;
+    color: black;
+    background-color: white;
+}
+
+.submitButton:hover  /* When I write it like this: ".submitButton :hover" it doesnt work (but why?)*/
+{
+    color:white !important;
+    background-color: black !important;
+}
+
+.aTagButton
+{
+    width: 200px;
+    height: 45px;
+    display: block;
+    border-radius: 10px;
+}
+
+
+
+#findInfoButton /*div*/
+{
+  margin-top: 30px;
+  width: 200px;
+  height: 45px;
+  text-align: center;
+  line-height: 45px;
+  margin-left: auto;
+  margin-right: auto;
+
+}
+
+.form
+{
+    width: 400px;
+    height: 550px;
+    background-image: url("/static/img/grey_wash_wall.png");
+    border-radius: 10px;
+    color: white;
+    padding: 10px;
+}
+
+#rigthForm
+{
+    float: left;
+    margin-left: 50px;
+}
+
+#leftForm
+{
+    float: left;
+}
+
+#container
+{
+    width: 900px;
+    height: 560px;
+    /*background-color: thistle;*/
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 120px;
+}
+
+#backButton
+{
+  width: 50px;
+  height: 50px;
+  background-image: url("/static/img/grey_wash_wall.png");
+  border-radius: 50%;
+  cursor: pointer;
+  position: absolute;
+  top: 7px;
+  right: 70px;
+  text-align: center;
+}
+
+
+/* disable arrows from number input*/
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}

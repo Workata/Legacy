@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+
+<link rel="stylesheet" href="{% static 'css/mangaAdd.css' %}" type="text/css" />
+<link rel="stylesheet" href="{% static 'icons/icon-set-4-all/css/fontello.css' %}" type="text/css" />
+<script type="text/javascript" src="{% static 'js/mangaAddFun.js' %}"></script>
+
+{% endblock %}
+
+{% block content %}
+
+{% if noDataFound %}
+    <script>alert("No data found");</script>
+{% endif %}
+{% if wrongTitle %}
+<script>alert("Title is blank");</script>
+{% endif %}
+{% if wrongStatus %}
+<script>alert("Wrong status");</script>
+{% endif %}
+{% if wrongVolumes%}
+<script>alert("You have to input number of finished volumes");</script>
+{% endif %}
+{% if wrongDate %}
+<script>alert("You have to input correct date");</script>
+{% endif %}
+{% if wrongRatingRange %}
+<script>alert("Wrong rating range");</script>
+{% endif %}
+
+
+<span id="backButton">
+    <a href="/mangaList?by=title&order=asc"> 
+        <i class="icon-left"></i>
+    </a>
+</span>
+
+<!-- content here-->
+<div id="container">
+    <div id="leftForm" class="form">
+
+        <div id="leftBoxTitle">Data</div>
+
+        <form action="/mangaAdd?mangaId={{manga.id}}&mangaInfoId={{mangaInfoPersonal.id}}&mangaGlobalId={{mangaGlobal.id}}" method="post">
+            {% csrf_token %}
+            
+            <label for="personalTitle">Title: </label>
+            <input type="text" value="{{personalTitle}}{{manga.title}}" class="input" name="personalTitle" id="personalTitle" placeholder="Title"><br>
+            <label for="personalStatus">Status: </label>
+            <input type="text" class="input" value="{{manga.status}}" list="statusEnum" name="status" id="personalStatus" placeholder="Status"><br>
+            <label for="personalVolumes">Volumes: </label>
+            <input type="number" class="input" value="{{manga.finishedVolumes}}" name="finishedVolumes" id="personalVolumes" placeholder="Finished volumes"><br>
+            <label for="personalEndDate">End date: </label>
+            <input type="date" class="input" value="{{manga.endDate}}" name="endDate" placeholder="Date of finish" id="personalEndDate"><br>
+            <label for="personalRating">Rating: </label>
+            <input type="number" list="ratingEnum" value="{{manga.rating}}" class="input" name="rating" id="personalRating" placeholder="Rating"><br>
+            <label for="personalComment">Comment: </label>
+            <input type="text" class="input" value="{{manga.comment}}" name="comment" placeholder="Comment" id="personalComment"><br>
+            
+            <input type = "hidden" name = "mangaId"  value = "{{manga.id}}" /> 
+            <input type = "hidden" name = "mangaInfoPersonalId" id="mangaInfoPersonal" value = "{{mangaInfo.id}}" /> 
+            <input type = "hidden" name = "mangaInfoGlobalId" id="mangaInfoGlobal" value = "{{mangaGlobal.id}}" />
+            <!-- debugging -->
+            <!--<input type = "number" name = "mangaId"  value = "{{manga.id}}" /> 
+            <input type = "number" name = "mangaInfoPersonalId" id="mangaInfoPersonal" value = "{{mangaInfo.id}}" /> 
+            <input type = "number" name = "mangaInfoGlobalId" id="mangaInfoGlobal" value = "{{mangaGlobal.id}}" />-->
+
+            <input type="submit" class="submitButton" value="Submit">
+            <input type="submit" formaction="/mangaScraper?mangaId={{manga.id}}&mangaInfoId={{mangaInfo.id}}&mangaGlobalId={{mangaGlobal.id}}" class="submitButton" value="Find">
+
+    </div>
+
+    <div id="rigthForm" class="form">
+
+        <div id="rigthBoxTitle">Informations</div>
+            <!--onchange="checkChanges()" should be everywhere; TODO implement it differently? -->
+            <label for="globalTitle">Full title: </label>
+            <input type="text" value="{{mangaInfo.title}}{{mangaGlobal.title}}" class="input" name="globalTitle" id="globalTitle" placeholder="Title"><br>
+            <label for="writtenBy">Written by: </label>
+            <input type="text" onchange="checkChanges()" value="{{mangaInfo.writtenBy}}{{mangaGlobal.writtenBy}}" class="input" name="writtenBy" id="writtenBy" placeholder="Written by" ><br>
+            <label for="illustratedBy">Illustrated by: </label>
+            <input type="text" value="{{mangaInfo.illustratedBy}}{{mangaGlobal.illustratedBy}}" class="input" name="illustratedBy" id="illustratedBy" placeholder="Illustrated by" ><br> 
+            <label for="publishedBy">Published by: </label>
+            <input type="text" value="{{mangaInfo.publishedBy}}{{mangaGlobal.publishedBy}}" class="input" name="publishedBy" id="publishedBy" placeholder="Published by" ><br> 
+            <label for="englishPublisher">English publisher: </label>
+            <input type="text" value="{{mangaInfo.englishPublisher}}{{mangaGlobal.englishPublisher}}" class="input" name="englishPublisher" id="englishPublisher" placeholder="English publisher" ><br> 
+            <label for="imprint">Imprint: </label>
+            <input type="text" value="{{mangaInfo.imprint}}{{mangaGlobal.imprint}}" class="input" name="imprint" id="imprint" placeholder="Imprint" ><br> 
+            <label for="magazine">Magazine: </label>
+            <input type="text" value="{{mangaInfo.magazine}}{{mangaGlobal.magazine}}" class="input" name="magazine" id="magazine" placeholder="Magazine" ><br> 
+            <label for="demographic">Demographic: </label>
+            <input type="text" value="{{mangaInfo.demographic}}{{mangaGlobal.demographic}}" class="input" name="demographic" id="demographic" placeholder="Demographic" ><br> 
+            <label for="originalRun">Original run: </label>
+            <input type="text" value="{{mangaInfo.originalRun}}{{mangaGlobal.originalRun}}" class="input" name="originalRun" id="originalRun" placeholder="Original run" ><br>         
+            <label for="globalVolumes">Volumes: </label>
+            <input type="number" value="{{mangaInfo.volumes}}{{mangaGlobal.volumes}}" class="input" name="globalVolumes" id="globalVolumes" placeholder="Number of volumes" ><br>
+
+        </form>
+
+    </div>
+    <div style="clear: both;" > </div>
+</div>
+
+<datalist id="statusEnum">
+    <option value="Reading">
+    <option value="Want to read">
+    <option value="Finished">
+    <option value="Abandoned">  
+</datalist>
+
+<datalist id="ratingEnum">
+    <option value="1">
+    <option value="2">
+    <option value="3">
+    <option value="4">  
+    <option value="5">
+    <option value="6">
+    <option value="7">
+    <option value="8">
+    <option value="9">
+    <option value="10">                
+</datalist>
+
+<!--{{data}}-->
+
+{% endblock %}

@@ -75,7 +75,7 @@
             <th class="columnName">Delete</th>
         </tr>
     
-        <form action="listModify?by=title&order=asc" method="post">
+        <form action="animeListModify?by=title&order=asc" method="post">
             {% csrf_token %}
 
             {% for anime, epi in aniEpiList %}

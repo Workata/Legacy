@@ -1,0 +1,103 @@
+#informationsContainer
+{
+    width: 600px;
+    height: 550px;
+    padding-top: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 10px;
+    background-image: url("/static/img/grey_wash_wall.png");
+    color: white;
+
+
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 125px;
+}
+
+a
+{
+    text-decoration: none;
+    color: white;        /*https://stackoverflow.com/questions/8739665/is-background-colornone-valid-css?rq=1*/
+}
+
+.aTagButton
+{
+    width: 120px;
+    height: 45px;
+    display: block;
+    border-radius: 10px;
+    color: black;
+}
+
+.aTagButton:hover
+{
+    color: white;
+}
+
+#modifyButton
+{
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    margin-top: 60px;
+
+    width: 120px;
+    height: 45px;
+
+    line-height: 45px;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: 700;
+    outline: none;
+    border: none;
+    border-radius: 10px;
+    color: black ;
+    background-color: white;
+}
+
+#modifyButton:hover  /* TODO why it doesnt work*/
+{
+    color:white !important;
+    background-color: black !important;
+}
+
+#header
+{
+    font-size: 40px;
+    width: 600px;
+    height: 45px;
+    text-align: center;
+    /*background-color: blue;*/
+}
+
+#informations
+{
+    margin-top:30px;
+    font-size: 20px;
+}
+
+.infoName
+{
+    color: black;
+    font-weight: 700;
+}
+
+.rowData
+{
+    margin-top:8px;
+}
+
+
+#backButton
+{
+  width: 50px;
+  height: 50px;
+  background-image: url("/static/img/grey_wash_wall.png");
+  border-radius: 50%;
+  cursor: pointer;
+  position: absolute;
+  top: 7px;
+  right: 70px;
+  text-align: center;
+}

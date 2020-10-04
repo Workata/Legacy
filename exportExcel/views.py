@@ -1,3 +1,4 @@
+# rename to export anime
 import io
 from django.shortcuts import render
 from django.shortcuts import redirect
@@ -53,7 +54,7 @@ def exportAnime(request):
         worksheet.write(y, 2, anime.status)
         worksheet.write(y, 3, anime.endDate, dateFormat)
         worksheet.write(y, 4, str(anime.rating))
-        worksheet.write(y, 5, anime.status)
+        worksheet.write(y, 5, anime.comment)
 
         print("AnimeInfoPersonalId:", anime.animeInfoPersonalId)
         print("AnimeInfoGlobalId:", anime.animeGlobalId)   
@@ -137,15 +138,15 @@ def importAnime(request):
 
                 anime.animeInfoPersonalId = animeInfo.id
 
-            anime.title = row[0]
+            anime.title            = row[0]
             anime.finishedEpisodes = int(episodesString[0])    #print(episodesStri)
-            anime.status = row[2]  
-            endDateString = row[3] #2020-08-24 00:00:00 (have to change this to -> 2020-08-24)
-            endDate =  endDateString[:10]
-            anime.endDate = endDate             #test
-            anime.rating = int(row[4])
-            anime.comment =  row[5]
-            anime.userId = user.id
+            anime.status           = row[2]  
+            endDateString          = row[3] #2020-08-24 00:00:00 (have to change this to -> 2020-08-24)
+            endDate                = endDateString[:10]
+            anime.endDate          = endDate             #test
+            anime.rating           = int(row[4])
+            anime.comment          = row[5]
+            anime.userId           = user.id
             anime.save()
 
 

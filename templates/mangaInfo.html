@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+
+<link rel="stylesheet" href="{% static 'css/mangaInfo.css' %}" type="text/css" />
+<link rel="stylesheet" href="{% static 'icons/icon-set-4-all/css/fontello.css' %}" type="text/css" />
+
+{% endblock %}
+{% block content %}
+
+<span id="backButton">
+    <a href="/mangaList?by=title&order=asc"> 
+        <i class="icon-left"></i>
+    </a>
+</span>
+
+<div id="informationsContainer">
+    <div id="header">Informations</div>
+    
+    <div id="informations">
+        <div class="rowData"><span class="infoName">Title:</span> {{manga.title}} </div>
+        <div class="rowData"><span class="infoName">Written by:</span> {{manga.writtenBy}}</div>
+        <div class="rowData"><span class="infoName">Illustrated by:</span> {{manga.illustratedBy}}</div> 
+        <div class="rowData"><span class="infoName">Published by:</span> {{manga.publishedBy}}</div>
+        <div class="rowData"><span class="infoName">English publisher:</span> {{manga.englishPublisher}}</div> 
+        <div class="rowData"><span class="infoName">Imprint:</span> {{manga.imprint}} 
+        <div class="rowData"><span class="infoName">Magazine:</span> {{manga.magazine}}</div> 
+        <div class="rowData"><span class="infoName">Demographic:</span> {{manga.demographic}}</div>
+        <div class="rowData"><span class="infoName">Original run:</span> {{manga.originalRun}}</div>
+        <div class="rowData"><span class="infoName">Volumes:</span> {{manga.volumes}}</div>
+        <div id="modifyButton"><a href="/mangaAdd?mangaId={{mangaId}}&mangaInfoId={{mangaInfoId}}&mangaGlobalId={{mangaGlobalId}}" class="aTagButton">Modify</a></div>
+    </div>
+    
+</div>
+
+
+{% endblock %}

@@ -75,8 +75,8 @@
     <div id="rigthForm" class="form">
 
         <div id="rigthBoxTitle">Informations</div>
-
-            <label for="globalTitle">Title: </label>
+            <!--onchange="checkChanges()" should be everywhere; TODO implement it differently? -->
+            <label for="globalTitle">Full title: </label>
             <input type="text" value="{{animeInfo.title}}{{animeGlobal.title}}" class="input" name="globalTitle" id="globalTitle" placeholder="Title"><br>
             <label for="directedBy">Directed by: </label>
             <input type="text" value="{{animeInfo.directedBy}}{{animeGlobal.directedBy}}" class="input" name="directedBy" id="directedBy" placeholder="Directed by"><br>
@@ -91,9 +91,11 @@
             <label for="licensedBy">Licensed by: </label>
             <input type="text"  value="{{animeInfo.licensedBy}}{{animeGlobal.licensedBy}}" class="input" name="licensedBy" id="licensedBy" placeholder="Licensed by" ><br>
             <label for="originalNetwork">Original network: </label>
-            <input type="text" value="{{animeInfo.originalNetwork}}{{animeGlobal.originalNetwork}}"  class="input" name="originalNetwork" id="originalNetwork" placeholder="Original network" ><br>    <!--TODO orIginal-->
+            <input type="text" value="{{animeInfo.originalNetwork}}{{animeGlobal.originalNetwork}}"  class="input" name="originalNetwork" id="originalNetwork" placeholder="Original network" ><br>   
+            <label for="englishNetwork">English network: </label>
+            <input type="text" value="{{animeInfo.englishNetwork}}{{animeGlobal.englishNetwork}}"  class="input" name="englishNetwork" id="englishNetwork" placeholder="English network" ><br>   
             <label for="originalRun">Original run: </label>
-            <input type="text" value="{{animeInfo.originalRun}}{{animeGlobal.originalRun}}" class="input" name="originalRun" id="originalRun" placeholder="Original run" ><br>         <!--TODO orIginal-->
+            <input type="text" value="{{animeInfo.originalRun}}{{animeGlobal.originalRun}}" class="input" name="originalRun" id="originalRun" placeholder="Original run" ><br>       
             <label for="globalEpisodes">Episodes: </label>
             <input type="number" value="{{animeInfo.episodes}}{{animeGlobal.episodes}}" class="input" name="globalEpisodes" id="globalEpisodes" placeholder="Number of episodes" ><br>
 

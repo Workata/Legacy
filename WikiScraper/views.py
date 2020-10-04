@@ -1,12 +1,13 @@
+# TODO change name to animeScraper
 from django.shortcuts import render
 from django.http import HttpResponse
 import wikipedia as wiki
-# import wptools
 import re
 from WikiScraper.models import AnimeGlobal
 
 # Create your views here.
 
+# DESCRIPTION this function will transform list to custom string format
 def makeStringFromList(list):
     listString = ""
     for i in range(len(list)):
@@ -15,6 +16,7 @@ def makeStringFromList(list):
             listString += ", "
     return listString
 
+# DESCRIPTION this filter assumes that full name ussualy contains one first name and one last name (two big letters), it will try to separate different persons
 def simpleFilter(text):
     #text.replace(" ", "")
     upperCounter = 0
@@ -29,11 +31,12 @@ def simpleFilter(text):
                 upperCounter = 1
                 start = i
 
-        if i == (len(text) - 1):            # last 
+        if i == (len(text) - 1):            # last one
             data.append(text[start:])             
     return data
 
-def licensedByFilter(text):
+# DESCRIPTION delete unnecessary whitespaces and separate different licensors 
+def licensedByFilter(text):     
     data = []
     start = 0
     licensorLoading = False
@@ -65,29 +68,43 @@ def filtrData(data, title):
 
     anime = AnimeGlobal()
 
-    # Dictionary of beginning indexes in each category
-    indexes = {"DirectedBy":data.find("Directed&#160;by"), "ProducedBy": data.find("Produced&#160;by"),"WrittenBy": data.find("Written&#160;by"), "MusicBy": data.find("Music&#160;by"), "Studio": data.find("Studio"), "LicensedBy": data.find("Licensed&#160;by"), "OriginalNetwork": data.find("Original"), "OriginalRun":data.find("Original run"), "Episodes": data.find("Episodes"), "English": data.find("English") }
+    # Dictionary of beginning indexes in each category, English network
+    indexes = {"DirectedBy":data.find("Directed&#160;by"), "ProducedBy": data.find("Produced&#160;by"),"WrittenBy": data.find("Written&#160;by"), "MusicBy": data.find("Music&#160;by"), "Studio": data.find("Studio"), "LicensedBy": data.find("Licensed&#160;by"), "OriginalNetwork": data.find("Original"), "English": data.find("English"), "OriginalRun":data.find("Original run"), "Episodes": data.find("Episodes") }
+    indexesArray = [indexes["DirectedBy"], indexes["ProducedBy"], indexes["WrittenBy"], indexes["MusicBy"], indexes["Studio"], indexes["LicensedBy"], indexes["OriginalNetwork"], indexes["English"], indexes["OriginalRun"], indexes["Episodes"] ]
+    offsetArray = [16, 16, 15, 13, 6, 16, 16, 15, 13, 8]
+    infoArray = []
 
-    print(indexes["WrittenBy"])
+    print(indexesArray)
 
-    anime.title = title
-    if indexes['ProducedBy'] == -1: # there is no "Produced by" category on wiki
-        anime.directedBy = data[indexes["DirectedBy"]+16:indexes["WrittenBy"]] 
-        anime.producedBy = None
-    else:
-        anime.directedBy  = data[indexes["DirectedBy"]+16:indexes["ProducedBy"]]  
-        anime.producedBy  =  makeStringFromList(simpleFilter(data[indexes["ProducedBy"]+16:indexes["WrittenBy"]]))      
-    anime.writtenBy   = data[indexes["WrittenBy"]+15:indexes["MusicBy"]]
-    anime.musicBy     = makeStringFromList(simpleFilter(data[indexes["MusicBy"]+13:indexes["Studio"]]))
-    anime.studio           = data[indexes["Studio"]+6:indexes["LicensedBy"]]
-    anime.licensedBy       = makeStringFromList(licensedByFilter(data[indexes["LicensedBy"]+16:indexes["OriginalNetwork"]]))
-    if indexes['English'] == -1:    # no english network on wiki
-        anime.originalNetwork  = data[indexes["OriginalNetwork"]+16:indexes["OriginalRun"]]
-    else:
-        anime.originalNetwork  = data[indexes["OriginalNetwork"]+16:indexes["English"]]        # "English" bcs english network
-    anime.originalRun       = data[indexes["OriginalRun"]+13:indexes["Episodes"]]     # premiered
-    anime.episodes         = data[indexes["Episodes"]+8:]
+    # in range(10) -> <0,9>
+    for i in range(10):
+        if indexesArray[i] == -1:
+            infoArray.append("None")
+            continue
+        else:
+            if i == 9:  # volumes; Last one in categories
+                infoArray.append(data[indexesArray[i]+offsetArray[i]:])
+                break
+            for j in range(i+1,10):
+                if indexesArray[j] == -1:
+                    continue
+                else:
+                    infoArray.append(data[ indexesArray[i]+offsetArray[i]:indexesArray[j] ])
+                    break
 
+    anime.title            = title
+    anime.directedBy       = infoArray[0]                                         # usually its a single person
+    anime.producedBy       = makeStringFromList(simpleFilter(infoArray[1]))
+    anime.writtenBy        = infoArray[2]                                         # usually its a single person
+    anime.musicBy          = makeStringFromList(simpleFilter(infoArray[3]))
+    anime.studio           = infoArray[4]
+    anime.licensedBy       = makeStringFromList(licensedByFilter(infoArray[5]))
+    anime.originalNetwork  = infoArray[6]
+    anime.englishNetwork   = makeStringFromList(licensedByFilter(infoArray[7]))
+    anime.originalRun      = infoArray[8]
+    if infoArray[9] != "None":
+         anime.episodes    = int(infoArray[9])
+    
     return anime
 
 
@@ -106,7 +123,7 @@ def animeScraper(request):          # TODO Add genre?
         tempTitle = personalTitle + " (TV series)"
         suggestedTitles = wiki.search(tempTitle, results = 3, suggestion = True)    # two dimensional array? xd
 
-        print(len(suggestedTitles[0]), " ", suggestedTitles)
+        print(len(suggestedTitles[0]), " ", suggestedTitles[0])
 
         if len(suggestedTitles[0]) == 0:   # ([], None)
             suggestedTitles = wiki.search(personalTitle, results = 3, suggestion = True)
@@ -114,12 +131,13 @@ def animeScraper(request):          # TODO Add genre?
                 return render(request, 'animeAdd.html', {'animeGlobal': None, 'personalTitle': personalTitle, 'noDataFound': True})
 
         # title = suggestedTitles[0][0]
-        print(suggestedTitles[0][0])
+        # print(suggestedTitles[0][0])
 
         for title in suggestedTitles[0]:
-            if AnimeGlobal.objects.filter(title= title).exists():
+            print(title)
+            if AnimeGlobal.objects.filter(title= title).exists():                         # check if this anime exists in database
                 animeGlobal = AnimeGlobal.objects.filter(title=title).first()
-                break
+                return render(request, 'animeAdd.html', {'animeGlobal': animeGlobal, 'personalTitle': personalTitle})
             else:
                 data = str(wiki.WikipediaPage(title= title).html())
                 data = re.sub('<sup style="font-style:normal;">.*?</sup>', '', data)      # remove 'NA' etc (country shortcuts from infobox)
@@ -129,7 +147,7 @@ def animeScraper(request):          # TODO Add genre?
                 if animeGlobal == -1:
                     continue
                 else: 
-                    animeGlobal.save() 
+                    # animeGlobal.save() # uncomment this (but comment when debugging)
                     return render(request, 'animeAdd.html', {'animeGlobal': animeGlobal, 'personalTitle': personalTitle})
 
         return render(request, 'animeAdd.html', {'animeGlobal': None, 'personalTitle': personalTitle, 'noDataFound': True}) # , 'data': data
