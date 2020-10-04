@@ -1,4 +1,4 @@
-# rename to export anime
+# rename to exportImportAnime
 import io
 from django.shortcuts import render
 from django.shortcuts import redirect
@@ -133,7 +133,7 @@ def importAnime(request):
                 animeInfo.licensedBy = row[12]
                 animeInfo.originalNetwork = row[13]
                 animeInfo.originalRun = row[14]
-                animeInfo.episodes = int(episodesString[2])
+                animeInfo.episodes = int(episodesString[2:])
                 animeInfo.save()
 
                 anime.animeInfoPersonalId = animeInfo.id

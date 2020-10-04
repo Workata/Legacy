@@ -26,5 +26,6 @@ urlpatterns = [
     path('', include('WikiScraper.urls')),
     path('', include('mangaScraper.urls')),
     path('', include('exportExcel.urls')),
+    path('', include('exportImportManga.urls')),
     path('accounts/', include('accounts.urls'))
 ]

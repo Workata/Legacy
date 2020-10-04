@@ -147,7 +147,7 @@ def animeScraper(request):          # TODO Add genre?
                 if animeGlobal == -1:
                     continue
                 else: 
-                    # animeGlobal.save() # uncomment this (but comment when debugging)
+                    animeGlobal.save() # !!! uncomment this (but comment when debugging)
                     return render(request, 'animeAdd.html', {'animeGlobal': animeGlobal, 'personalTitle': personalTitle})
 
         return render(request, 'animeAdd.html', {'animeGlobal': None, 'personalTitle': personalTitle, 'noDataFound': True}) # , 'data': data

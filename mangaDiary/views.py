@@ -119,22 +119,23 @@ def mangaAdd(request):
             mangaNew.mangaInfoPersonalId = mangaInfoPersonal.id
             mangaNew.mangaGlobalId = None
             mangaNew.userId = user.id
-            mangaNew.save()    # update
+            mangaNew.save()                                                     # update
             manga = mangaNew
-        else:                               # no changes in info category
-            mangaInfoPersonal = None        # set manga info personal to none
+        else:                                                                   # no changes in info category
+            mangaInfoPersonal = None                                            # set manga info personal to none
             
-            # mangaInfoGlobal added to table in WikiScraper, id of it is in mangaInfoGlobalId
-            if mangaInfoGlobalId != "":
-                mangaGlobal = MangaGlobal.objects.filter(id = mangaInfoGlobalId).first()
-            else:   # there are no personal nor global informations about this manga
+            # * mangaInfoGlobal added to table in WikiScraper, id of it is in mangaInfoGlobalId
+            if mangaInfoGlobalId == "" or mangaId == None or mangaId == "None": # there are no personal nor global informations about this manga
                 mangaGlobal = None
                 mangaInfoGlobalId = None
+            else:   
+                mangaGlobal = MangaGlobal.objects.filter(id = mangaInfoGlobalId).first()
 
-            if mangaId == "" or mangaId == None or mangaId =="None":   # there is no entry in personal manga table
+            if mangaId == "" or mangaId == None or mangaId =="None":            # there is no entry in personal manga table
                 mangaNew = MangaPersonal()
-            else:               # there is an entry in table, update it
+            else:                                                               # there is an entry in table, update it
                 mangaNew = MangaPersonal.objects.filter(id=mangaId).first()
+
             mangaNew.title = manga.title
             mangaNew.status = manga.status
             mangaNew.finishedVolumes = manga.finishedVolumes
@@ -144,7 +145,7 @@ def mangaAdd(request):
             mangaNew.mangaInfoPersonalId = None
             mangaNew.mangaGlobalId = mangaInfoGlobalId
             mangaNew.userId = user.id
-            mangaNew.save()    # update
+            mangaNew.save()                                                     # update
             manga = mangaNew
 
     if request.method == 'GET':

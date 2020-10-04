@@ -139,7 +139,7 @@ def mangaScraper(request):          # TODO Add genre?
                 if mangaGlobal == -1:
                     continue
                 else: 
-                    # mangaGlobal.save()     #uncomment this (but comment when debugging)
+                    mangaGlobal.save()      # !!! uncomment this (but comment when debugging)
                     return render(request, 'mangaAdd.html', {'mangaGlobal': mangaGlobal, 'personalTitle': personalTitle})
 
         return render(request, 'mangaAdd.html', {'mangaGlobal': None, 'personalTitle': personalTitle, 'noDataFound': True}) # , 'data': data

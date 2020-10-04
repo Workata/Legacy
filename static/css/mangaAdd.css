@@ -19,62 +19,62 @@ a
 
 #globalTitle
 {
-  margin-left: 77px;
+  margin-left: 65px;
   width: 275px;
 }
 
 #writtenBy
 {
   width: 275px;
-  margin-left: 39px;
+  margin-left: 49px;
 }
 
 #illustratedBy
 {
   width: 275px;
-  margin-left: 20px;
+  margin-left: 30px;
 }
 
 #publishedBy
 {
   width: 275px;
-  margin-left: 20px;
+  margin-left: 30px;
 }
 
 #englishPublisher
 {
-  width: 265px;
+  width: 275px;
   margin-left: 2px;
 }
 
 #imprint
 {
   width: 275px;
-  margin-left: 63px;
+  margin-left: 73px;
 }
 
 #magazine
 {
   width: 275px;
-  margin-left: 45px;
+  margin-left: 55px;
 }
 
 #demographic
 {
   width: 275px;
-  margin-left: 20px;
+  margin-left: 30px;
 }
 
 #originalRun
 {
   width: 275px;
-  margin-left: 30px;
+  margin-left: 40px;
 }
 
 #globalVolumes
 {
   width: 275px;
-  margin-left: 50px;
+  margin-left: 60px;
 }
 
 
@@ -174,7 +174,7 @@ a
 
 .form
 {
-    width: 400px;
+    width: 410px;
     height: 550px;
     background-image: url("/static/img/grey_wash_wall.png");
     border-radius: 10px;
@@ -195,7 +195,7 @@ a
 
 #container
 {
-    width: 900px;
+    width: 920px;
     height: 560px;
     /*background-color: thistle;*/
     margin-left: auto;
